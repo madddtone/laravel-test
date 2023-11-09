@@ -140,16 +140,21 @@ class AuthenticationTest extends TestCase
         $invalidPassword = '12345678';
         $validPassword = 'a12345678';
 
-        $this->post('/register', $user + [
+        // Ensure validation fails for the invalid password
+        $response = $this->post('/register', $user + [
             'password' => $invalidPassword,
             'password_confirmation' => $invalidPassword
         ]);
-        $this->assertDatabaseMissing('users', $user);
+        $response->assertSessionHasErrors(['password' => 'The password must contain at least one letter.']);
 
-        $this->post('/register', $user + [
-                'password' => $validPassword,
-                'password_confirmation' => $validPassword
-            ]);
+        // Ensure validation passes for the valid password
+        $response = $this->post('/register', $user + [
+            'password' => $validPassword,
+            'password_confirmation' => $validPassword
+        ]);
+        $response->assertSessionDoesntHaveErrors('password');
+
+        // Check if the user is created in the database
         $this->assertDatabaseHas('users', $user);
     }
 }
