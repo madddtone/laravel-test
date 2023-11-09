@@ -231,4 +231,6 @@ return [
 
     ],
 
+    'meta_title' => env('APP_META_TITLE', 'Laravel'),
+
 ];

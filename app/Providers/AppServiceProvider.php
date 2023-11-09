@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // Set a default value if $metaTitle is not set
+        $metaTitle = $this->app['config']->get('app.meta_title', 'Laravel');
+
+        // Share $metaTitle to all views
+        View::share('metaTitle', $metaTitle);
     }
 }

@@ -1,3 +1,4 @@
+
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -20,7 +21,7 @@
                             @foreach ($users as $user)
                                 <tr class="bg-red-100">
                                     {{-- Task: include file resources/views/includes/row.blade.php --}}
-                                    {{-- passing the $user variable to it --}}
+                                    @include('includes.row', ['user' => $user])
                                 </tr>
                             @endforeach
                         </tbody>
@@ -30,3 +31,4 @@
         </div>
     </div>
 </x-app-layout>
+
